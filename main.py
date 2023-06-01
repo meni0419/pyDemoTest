@@ -1,10 +1,6 @@
 import requests.cookies
 import pytest
 import requests
-<<<<<<< HEAD
-=======
-import json
->>>>>>> parent of adb90d1 (comment json (for test commit mac and win10))
 import requests.utils
 import json
 
@@ -37,9 +33,24 @@ def login():
 
 
 def test_login(cred, login):
-    print('Тест вход в программу:')
+    print('Вход в программу: ')
     kpi_domain = cred["kpi_domain"]
     logins = cred["login"]
     password = cred["password"]
     cookies = login(kpi_domain, logins, password)
-    print(cookies)
+
+
+def test_getmo(cred, login):
+    print('Получено более 1 ОУ: ')
+    kpi_domain = cred["kpi_domain"]
+    logins = cred["login"]
+    password = cred["password"]
+    cookies = login(kpi_domain, logins, password)
+    url = f'{kpi_domain}/_api/mo/get_mo'
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    session = requests.Session()
+    resp = session.post(url, headers=headers, cookies=cookies)
+    assert resp.status_code == 200
+    jsonData = resp.json()
+    assert jsonData['DATA']['rows_count'] > 1
+    print('Количество ОУ: ' + str(jsonData['DATA']['rows_count']))
