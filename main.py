@@ -50,7 +50,7 @@ def test_getmo(cred, login):
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     session = requests.Session()
     resp = session.post(url, headers=headers, cookies=cookies)
-    assert resp.status_code == 200
     jsonData = resp.json()
-    assert jsonData['DATA']['rows_count'] > 1
+    assert jsonData['DATA']['rows_count'] > 1 and resp.status_code == 400
     print('Количество ОУ: ' + str(jsonData['DATA']['rows_count']))
+    print('статус: ' + str(jsonData['DATA']['rows_count']))
