@@ -51,6 +51,6 @@ def test_getmo(cred, login):
     session = requests.Session()
     resp = session.post(url, headers=headers, cookies=cookies)
     jsonData = resp.json()
-    assert jsonData['DATA']['rows_count'] > 1 and resp.status_code == 400
+    assert jsonData['DATA']['rows_count'] > 1 and resp.status_code == 200
     print('Количество ОУ: ' + str(jsonData['DATA']['rows_count']))
     print('статус: ' + str(jsonData['DATA']['rows_count']))
