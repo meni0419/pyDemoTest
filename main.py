@@ -33,7 +33,7 @@ def login():
 
 
 def test_login(cred, login):
-    print('Вход в программу: ')
+    print('\n Вход в программу: ')
     kpi_domain = cred["kpi_domain"]
     logins = cred["login"]
     password = cred["password"]
@@ -41,7 +41,7 @@ def test_login(cred, login):
 
 
 def test_getmo(cred, login):
-    print('Получено более 1 ОУ: ')
+    print('\n Получено более 1 ОУ: ')
     kpi_domain = cred["kpi_domain"]
     logins = cred["login"]
     password = cred["password"]
@@ -52,5 +52,22 @@ def test_getmo(cred, login):
     resp = session.post(url, headers=headers, cookies=cookies)
     jsonData = resp.json()
     assert jsonData['DATA']['rows_count'] > 1 and resp.status_code == 200
-    print('Количество ОУ: ' + str(jsonData['DATA']['rows_count']))
-    print('статус: ' + str(jsonData['DATA']['rows_count']))
+    print(' Количество ОУ: ' + str(jsonData['DATA']['rows_count']))
+    print(' статус: ' + str(jsonData['DATA']['rows_count']))
+
+def test_get_layout(cred, login):
+    print('\n Проверяем возвращается ли layout: ')
+    kpi_domain = cred["kpi_domain"]
+    logins = cred["login"]
+    password = cred["password"]
+    cookies = login(kpi_domain, logins, password)
+    url = f'{kpi_domain}/_api/layout'
+    payload = {
+        'id': 1
+    }
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    session = requests.Session()
+    resp = session.post(url, headers=headers, cookies=cookies)
+    jsonData = resp.json()
+    assert resp.status_code == 200
+    print(' статус: ' + str(resp.status_code))
